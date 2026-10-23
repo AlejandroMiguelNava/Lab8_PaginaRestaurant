@@ -1,0 +1,3534 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RestoFlow - El software todo-en-uno para restaurantes, bares y cafeterías. Punto de Venta (POS), comandas de cocina KDS, menú QR, inventarios y delivery centralizado.">
+  <meta name="keywords" content="software para restaurantes, POS gastronómico, comanda digital, menú QR, sistema KDS cocina, control de inventario restaurante">
+  <title>RestoFlow | El Sistema Operativo Inteligente para tu Restaurante</title>
+
+  <!-- Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. VARIABLES CSS Y TEMA (LIGHT / DARK)
+       ========================================================================== */
+    :root {
+      /* Paleta Principal - Dark por defecto con acentos gastronómicos vibrantes */
+      --bg-primary: #090d16;
+      --bg-secondary: #0f172a;
+      --bg-card: rgba(17, 24, 39, 0.75);
+      --bg-card-hover: rgba(30, 41, 59, 0.85);
+      --bg-input: #1e293b;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(255, 107, 43, 0.35);
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      /* Acentos Gastronómicos de Alta Conversión */
+      --primary: #ff5e28;
+      --primary-hover: #ff7546;
+      --primary-glow: rgba(255, 94, 40, 0.35);
+      --secondary: #f59e0b;
+      --secondary-glow: rgba(245, 158, 11, 0.25);
+      --accent-green: #10b981;
+      --accent-green-bg: rgba(16, 185, 129, 0.15);
+      --accent-blue: #38bdf8;
+      --accent-purple: #a855f7;
+
+      /* Sombras y Filtros */
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.35), 0 8px 10px -6px rgba(0, 0, 0, 0.25);
+      --shadow-lg: 0 20px 45px -10px rgba(0, 0, 0, 0.6);
+      --shadow-glow: 0 0 35px var(--primary-glow);
+      --backdrop-blur: blur(16px);
+
+      /* Tipografía y Espaciado */
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-full: 9999px;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --bg-card-hover: rgba(255, 255, 255, 1);
+      --bg-input: #ffffff;
+      --border-subtle: rgba(0, 0, 0, 0.08);
+      --border-accent: rgba(255, 94, 40, 0.4);
+
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #94a3b8;
+
+      --primary: #ff5722;
+      --primary-hover: #f4511e;
+      --primary-glow: rgba(255, 87, 34, 0.2);
+      --secondary: #d97706;
+      --secondary-glow: rgba(217, 119, 6, 0.15);
+      --accent-green: #059669;
+      --accent-green-bg: rgba(5, 150, 105, 0.12);
+
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
+      --shadow-glow: 0 0 30px rgba(255, 87, 34, 0.2);
+    }
+
+    /* ==========================================================================
+       2. RESET Y ESTILOS BASE
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      position: relative;
+    }
+
+    /* Patrón de fondo geométrico sutil */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 15% 15%, rgba(255, 94, 40, 0.08) 0%, transparent 40%),
+                  radial-gradient(circle at 85% 85%, rgba(245, 158, 11, 0.06) 0%, transparent 45%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+
+    ul, ol {
+      list-style: none;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      border: none;
+      outline: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Clases contenedoras */
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section {
+      padding: 6.5rem 0;
+      position: relative;
+    }
+
+    .text-center { text-align: center; }
+    .text-gradient {
+      background: linear-gradient(135deg, var(--primary) 0%, #ff8f5a 50%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    /* Badges y Pills */
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-full);
+      background: rgba(255, 94, 40, 0.12);
+      border: 1px solid var(--border-accent);
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .badge-pill .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 94, 40, 0.7); }
+      70% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(255, 94, 40, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 94, 40, 0); }
+    }
+
+    .section-header {
+      max-width: 760px;
+      margin: 0 auto 3.5rem auto;
+      text-align: center;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Botones */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.85rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #f4511e 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 18px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px var(--primary-glow);
+      filter: brightness(1.08);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: var(--backdrop-blur);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-sm {
+      padding: 0.55rem 1.25rem;
+      font-size: 0.875rem;
+    }
+
+    .btn-lg {
+      padding: 1.05rem 2.25rem;
+      font-size: 1.05rem;
+    }
+
+    /* ==========================================================================
+       3. NAVEGACIÓN Y NAVBAR
+       ========================================================================== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 1.1rem 0;
+      transition: var(--transition);
+    }
+
+    .navbar.scrolled {
+      background: rgba(9, 13, 22, 0.85);
+      backdrop-filter: var(--backdrop-blur);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.8rem 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    [data-theme="light"] .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: var(--font-heading);
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary);
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0%;
+      height: 2px;
+      background-color: var(--primary);
+      transition: var(--transition);
+      border-radius: var(--radius-full);
+    }
+
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Switch de Tema */
+    .theme-toggle-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--bg-card-hover);
+      transform: rotate(15deg);
+    }
+
+    .hamburger-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: transparent;
+      cursor: pointer;
+      padding: 0.5rem;
+      z-index: 1001;
+    }
+
+    .hamburger-btn span {
+      width: 24px;
+      height: 2px;
+      background: var(--text-main);
+      transition: var(--transition);
+      border-radius: 2px;
+    }
+
+    .hamburger-btn.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-btn.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile Drawer */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 82%;
+      max-width: 380px;
+      height: 100vh;
+      background: var(--bg-secondary);
+      border-left: 1px solid var(--border-subtle);
+      z-index: 999;
+      padding: 6rem 2rem 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .mobile-menu.active {
+      right: 0;
+    }
+
+    .mobile-nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .mobile-nav-links a {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       4. HERO SECTION
+       ========================================================================== */
+    .hero-section {
+      padding: 9.5rem 0 5.5rem 0;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: 3.6rem;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-description {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 2.2rem;
+      max-width: 580px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .trust-item svg {
+      color: var(--accent-green);
+    }
+
+    /* Mockup Dashboard Hero */
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-card-preview {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem;
+      backdrop-filter: var(--backdrop-blur);
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+      position: relative;
+      overflow: hidden;
+      transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
+      transition: var(--transition);
+    }
+
+    .hero-card-preview:hover {
+      transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+    }
+
+    /* Mockup Header Bar */
+    .mockup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.9rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .mockup-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .mockup-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .mockup-dots span:nth-child(1) { background: #ef4444; }
+    .mockup-dots span:nth-child(2) { background: #f59e0b; }
+    .mockup-dots span:nth-child(3) { background: #10b981; }
+
+    .mockup-status {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-green);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Mockup Metrics Row */
+    .mockup-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.9rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .metric-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.25rem;
+    }
+
+    .metric-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .metric-trend {
+      font-size: 0.72rem;
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+
+    /* Mockup Live Ticket */
+    .mockup-kds-ticket {
+      background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(255, 94, 40, 0.25);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+    }
+
+    .ticket-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .ticket-mesa {
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ticket-time {
+      font-size: 0.75rem;
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .ticket-items {
+      font-size: 0.82rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .ticket-item {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+    }
+
+    .ticket-item.done {
+      color: var(--accent-green);
+      text-decoration: line-through;
+    }
+
+    /* Floating Badges */
+    .floating-badge {
+      position: absolute;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-accent);
+      padding: 0.75rem 1.1rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      backdrop-filter: var(--backdrop-blur);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 10;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .floating-badge.badge-top-left {
+      top: -20px;
+      left: -25px;
+    }
+
+    .floating-badge.badge-bottom-right {
+      bottom: -15px;
+      right: -20px;
+      animation-delay: 2s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .badge-icon-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 94, 40, 0.15);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ==========================================================================
+       5. LOGOS Y SOCIAL PROOF
+       ========================================================================== */
+    .social-proof-bar {
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 2.2rem 0;
+      background: rgba(15, 23, 42, 0.35);
+    }
+
+    .logos-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      opacity: 0.65;
+    }
+
+    .brand-partner {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .brand-partner:hover {
+      opacity: 1;
+      color: var(--primary);
+    }
+
+    /* Métricas Impacto */
+    .impact-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.8rem;
+      margin-top: 4rem;
+    }
+
+    .impact-stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.8rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .impact-stat-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+    }
+
+    .impact-number {
+      font-family: var(--font-heading);
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .impact-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       6. COMPARACIÓN ANTES VS DESPUÉS
+       ========================================================================== */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .comparison-card {
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+      backdrop-filter: var(--backdrop-blur);
+      transition: var(--transition);
+    }
+
+    .comparison-card.card-before {
+      background: rgba(239, 68, 68, 0.04);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .comparison-card.card-after {
+      background: rgba(16, 185, 129, 0.05);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.08);
+      position: relative;
+    }
+
+    .comparison-card-badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-before .comparison-card-badge {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+    }
+
+    .card-after .comparison-card-badge {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+    }
+
+    .comparison-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+
+    .comparison-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .comparison-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .comparison-item svg {
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .card-before .comparison-item svg { color: #ef4444; }
+    .card-after .comparison-item svg { color: #10b981; }
+
+    /* ==========================================================================
+       7. CARACTERÍSTICAS PRINCIPALES (GRID)
+       ========================================================================== */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .feature-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon-box {
+      width: 58px;
+      height: 58px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 94, 40, 0.1);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover .feature-icon-box {
+      background: var(--primary);
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    .feature-title {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .feature-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .feature-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+
+    .feature-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      color: var(--text-dim);
+    }
+
+    /* ==========================================================================
+       8. SIMULADOR INTERACTIVO (DEMO POS EN VIVO)
+       ========================================================================== */
+    .simulator-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: var(--backdrop-blur);
+    }
+
+    .simulator-tabs {
+      display: flex;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.8rem;
+      overflow-x: auto;
+    }
+
+    .sim-tab-btn {
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .sim-tab-btn:hover {
+      color: var(--text-main);
+      background: var(--bg-secondary);
+    }
+
+    .sim-tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+
+    .sim-content-pane {
+      display: none;
+    }
+
+    .sim-content-pane.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Panel 1: Comandero Táctil */
+    .pos-layout {
+      display: grid;
+      grid-template-columns: 1.7fr 1.1fr;
+      gap: 1.5rem;
+    }
+
+    .menu-catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .catalog-item-btn {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .catalog-item-btn:hover {
+      border-color: var(--primary);
+      background: var(--bg-card-hover);
+      transform: translateY(-3px);
+    }
+
+    .item-emoji {
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .item-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .item-price {
+      font-size: 0.9rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-top: 0.4rem;
+    }
+
+    /* Ticket / Comanda activa */
+    .pos-ticket-pane {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pos-ticket-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      max-height: 230px;
+      overflow-y: auto;
+      margin: 1rem 0;
+      padding-right: 0.4rem;
+    }
+
+    .pos-order-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed var(--border-subtle);
+      font-size: 0.88rem;
+    }
+
+    .pos-order-row .remove-item-btn {
+      background: transparent;
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 0.75rem;
+      margin-left: 0.5rem;
+    }
+
+    .pos-ticket-summary {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1rem;
+    }
+
+    .pos-total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    /* Panel 2: Plano de Mesas */
+    .tables-floor-plan {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .table-node {
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .table-node:hover {
+      transform: scale(1.04);
+    }
+
+    .table-node.occupied {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.08);
+    }
+
+    .table-node.available {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .table-node.billing {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .table-number {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .table-status-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 0.35rem;
+    }
+
+    /* Panel 3: KDS Cocina */
+    .kds-orders-stream {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .kds-card {
+      background: var(--bg-secondary);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .kds-card.urgent {
+      border-left-color: #ef4444;
+    }
+
+    /* ==========================================================================
+       9. CALCULADORA DE RETORNO DE INVERSIÓN (ROI)
+       ========================================================================== */
+    .calculator-wrapper {
+      background: linear-gradient(145deg, rgba(26, 34, 52, 0.7), rgba(15, 23, 42, 0.95));
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .calc-slider-group {
+      margin-bottom: 2rem;
+    }
+
+    .calc-slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .calc-slider-label {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .calc-slider-value {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .calc-slider-input {
+      width: 100%;
+      height: 8px;
+      border-radius: var(--radius-full);
+      background: var(--bg-input);
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    .calc-slider-input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .calc-slider-input::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    /* Resultados de la calculadora */
+    .roi-results-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 2.2rem;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .roi-result-title {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.6rem;
+    }
+
+    .roi-result-amount {
+      font-family: var(--font-heading);
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: var(--accent-green);
+      line-height: 1;
+      margin-bottom: 1.2rem;
+    }
+
+    .roi-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1.2rem;
+      margin-bottom: 1.6rem;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    .roi-breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+    }
+
+    .roi-breakdown-row strong {
+      color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       10. TESTIMONIOS Y SOCIAL PROOF
+       ========================================================================== */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition);
+    }
+
+    .testimonial-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-5px);
+    }
+
+    .testimonial-stars {
+      color: #f59e0b;
+      margin-bottom: 1.2rem;
+      display: flex;
+      gap: 4px;
+    }
+
+    .testimonial-quote {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1.2rem;
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary);
+    }
+
+    .author-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .author-restaurant {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    /* ==========================================================================
+       11. TABLA DE PRECIOS TRANSPARENTES
+       ========================================================================== */
+    .pricing-toggle-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .toggle-label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .pricing-switch {
+      position: relative;
+      display: inline-block;
+      width: 58px;
+      height: 30px;
+    }
+
+    .pricing-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      transition: .3s;
+      border-radius: 30px;
+    }
+
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--primary);
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .switch-slider {
+      background-color: rgba(255, 94, 40, 0.2);
+    }
+
+    input:checked + .switch-slider:before {
+      transform: translateX(28px);
+    }
+
+    .save-discount-badge {
+      background: var(--accent-green-bg);
+      color: var(--accent-green);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      margin-left: 0.4rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.6rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .pricing-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-6px);
+    }
+
+    .pricing-card.featured {
+      background: linear-gradient(165deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+      border: 2px solid var(--primary);
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+      transform: scale(1.04);
+    }
+
+    .pricing-card.featured:hover {
+      transform: scale(1.05) translateY(-4px);
+    }
+
+    .featured-ribbon {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--primary) 0%, #ff7546 100%);
+      color: #ffffff;
+      padding: 0.35rem 1.25rem;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .plan-name {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .plan-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.8rem;
+      min-height: 42px;
+    }
+
+    .plan-price-box {
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      margin-bottom: 2rem;
+    }
+
+    .price-currency {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .price-amount {
+      font-family: var(--font-heading);
+      font-size: 3.4rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1;
+    }
+
+    .price-period {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+
+    .plan-features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+      margin-bottom: 2.2rem;
+      flex-grow: 1;
+    }
+
+    .plan-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .plan-feature-item svg {
+      flex-shrink: 0;
+      color: var(--accent-green);
+    }
+
+    /* ==========================================================================
+       12. PREGUNTAS FRECUENTES (FAQ ACCORDION)
+       ========================================================================== */
+    .faq-accordion {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .faq-item:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .faq-question-btn {
+      width: 100%;
+      background: transparent;
+      padding: 1.35rem 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-main);
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .faq-chevron {
+      transition: transform 0.3s ease;
+      color: var(--primary);
+    }
+
+    .faq-item.active .faq-chevron {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease-out;
+      background: var(--bg-secondary);
+    }
+
+    .faq-answer-inner {
+      padding: 1.25rem 1.6rem 1.6rem 1.6rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* ==========================================================================
+       13. SECCIÓN FINAL CTA / FORMULARIO LEAD
+       ========================================================================== */
+    .cta-banner-wrapper {
+      background: radial-gradient(circle at 50% 0%, rgba(255, 94, 40, 0.25) 0%, transparent 75%),
+                  var(--bg-secondary);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg);
+      padding: 4.5rem 2.5rem;
+      text-align: center;
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner-title {
+      font-family: var(--font-heading);
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1.1rem;
+    }
+
+    .cta-banner-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 2.5rem auto;
+    }
+
+    .inline-lead-form {
+      display: flex;
+      max-width: 580px;
+      margin: 0 auto 1.8rem auto;
+      gap: 0.75rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 0.4rem 0.4rem 0.4rem 1.4rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .inline-lead-input {
+      flex: 1;
+      background: transparent;
+      color: var(--text-main);
+      font-size: 0.95rem;
+    }
+
+    .inline-lead-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    /* ==========================================================================
+       14. FOOTER
+       ========================================================================== */
+    .site-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 5rem 0 2.5rem 0;
+      background: rgba(8, 11, 18, 0.8);
+      font-size: 0.9rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-brand-desc {
+      color: var(--text-muted);
+      margin: 1.1rem 0 1.6rem 0;
+      line-height: 1.6;
+      max-width: 320px;
+    }
+
+    .footer-heading {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 1.3rem;
+      color: var(--text-main);
+    }
+
+    .footer-links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .footer-link {
+      color: var(--text-muted);
+    }
+
+    .footer-link:hover {
+      color: var(--primary);
+      padding-left: 4px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* ==========================================================================
+       15. BOTONES FLOTANTES (WHATSAPP & SCROLL TOP)
+       ========================================================================== */
+    .floating-actions-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      z-index: 990;
+    }
+
+    .float-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+      color: #ffffff;
+    }
+
+    .float-btn-whatsapp {
+      background: #25d366;
+    }
+
+    .float-btn-whatsapp:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+    }
+
+    .float-btn-top {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+    }
+
+    .float-btn-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .float-btn-top:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* ==========================================================================
+       16. MODAL INTERACTIVO DE DEMO / REGISTRO
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 520px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+      position: relative;
+      transform: scale(0.92) translateY(20px);
+      transition: var(--transition);
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .modal-close-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .modal-title {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.8rem;
+    }
+
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .form-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .form-control {
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    /* Toast Notification */
+    .toast-notification {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      background: var(--bg-card);
+      border-left: 4px solid var(--accent-green);
+      box-shadow: var(--shadow-lg);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-md);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      backdrop-filter: var(--backdrop-blur);
+      transform: translateX(120%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast-notification.show {
+      transform: translateX(0);
+    }
+
+    /* ==========================================================================
+       17. RESPONSIVIDAD (MEDIA QUERIES)
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-title { font-size: 2.8rem; }
+      .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+      .pricing-card.featured { transform: scale(1); }
+      .calculator-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+      .impact-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu, .nav-actions .btn { display: none; }
+      .hamburger-btn { display: flex; }
+      .hero-section { padding-top: 7rem; }
+      .hero-title { font-size: 2.2rem; }
+      .section-title { font-size: 2rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .pos-layout { grid-template-columns: 1fr; }
+      .menu-catalog-grid { grid-template-columns: repeat(2, 1fr); }
+      .tables-floor-plan { grid-template-columns: repeat(2, 1fr); }
+      .kds-orders-stream { grid-template-columns: 1fr; }
+      .inline-lead-form { flex-direction: column; border-radius: var(--radius-md); padding: 0.75rem; }
+      .inline-lead-input { padding: 0.5rem; margin-bottom: 0.5rem; }
+      .floating-badge { display: none; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-trust { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       NAVBAR / HEADER
+       ========================================================================== -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo" aria-label="RestoFlow Inicio">
+        <div class="logo-icon">
+          <!-- SVG Chef Hat + Digital pulse icon -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 13.8a4.5 4.5 0 1 1-2.4-7.9 5.5 5.5 0 0 1 10.8-1.5 4.5 4.5 0 0 1 7.1 5.9A4.5 4.5 0 0 1 18 13.8"></path>
+            <path d="M6 14v4a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-4"></path>
+            <line x1="6" y1="17" x2="18" y2="17"></line>
+          </svg>
+        </div>
+        <span>Resto<span class="text-gradient">Flow</span></span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="nav-menu" aria-label="Navegación principal">
+        <a href="#features" class="nav-link">Características</a>
+        <a href="#simulator" class="nav-link">Demo POS</a>
+        <a href="#calculator" class="nav-link">Calculadora ROI</a>
+        <a href="#pricing" class="nav-link">Planes</a>
+        <a href="#testimonials" class="nav-link">Clientes</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+      </nav>
+
+      <!-- Action items -->
+      <div class="nav-actions">
+        <!-- Switch de modo oscuro/claro -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Cambiar tema de color" title="Alternar Modo Claro / Oscuro">
+          <svg id="themeIconSun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg id="themeIconMoon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <button class="btn btn-primary btn-sm open-modal-btn">Probar 14 Días Gratis</button>
+
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú de navegación">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+  <aside class="mobile-menu" id="mobileMenu">
+    <div class="mobile-nav-links">
+      <a href="#features" class="mobile-link">Características</a>
+      <a href="#simulator" class="mobile-link">Demo POS</a>
+      <a href="#calculator" class="mobile-link">Calculadora ROI</a>
+      <a href="#pricing" class="mobile-link">Planes</a>
+      <a href="#testimonials" class="mobile-link">Clientes</a>
+      <a href="#faq" class="mobile-link">Preguntas Frecuentes</a>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:1rem;">
+      <button class="btn btn-primary btn-lg open-modal-btn" style="width:100%;">Comenzar Gratis</button>
+      <p style="font-size:0.8rem; text-align:center; color:var(--text-dim);">Sin tarjeta de crédito requerida</p>
+    </div>
+  </aside>
+
+  <main>
+    <!-- ==========================================================================
+         HERO SECTION
+         ========================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="badge-pill">
+            <span class="pulse-dot"></span>
+            <span>Versión 4.2: Facturación e IA Gastronómica</span>
+          </div>
+
+          <h1 class="hero-title">
+            El sistema operativo que tu restaurante necesita para <span class="text-gradient">vender más y operar sin caos</span>.
+          </h1>
+
+          <p class="hero-description">
+            Punto de Venta (POS) ultrarrápido, comandas en tiempo real a cocina (KDS), menú digital QR y control automático de mermas e inventario. Todo sincronizado en la nube.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg open-modal-btn">
+              <span>Comenzar Prueba Gratuita</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+
+            <a href="#simulator" class="btn btn-secondary btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <span>Explorar Demo en Vivo</span>
+            </a>
+          </div>
+
+          <div class="hero-trust">
+            <div class="trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>14 días de prueba gratis</span>
+            </div>
+            <div class="trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Configuración en 15 minutos</span>
+            </div>
+            <div class="trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Funciona sin internet (Offline)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mockup Visual -->
+        <div class="hero-visual">
+          <!-- Floating Badge Superior -->
+          <div class="floating-badge badge-top-left">
+            <div class="badge-icon-circle">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                <polyline points="17 6 23 6 23 12"></polyline>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:0.75rem; color:var(--text-dim); font-weight:600;">Rotación de Mesas</div>
+              <div style="font-size:1.05rem; font-weight:800; color:var(--accent-green);">+35% más rápida</div>
+            </div>
+          </div>
+
+          <!-- Card Mockup Principal -->
+          <div class="hero-card-preview">
+            <div class="mockup-header">
+              <div class="mockup-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="mockup-status">
+                <span class="pulse-dot" style="width:6px; height:6px;"></span>
+                <span>MODO EN VIVO • SERVICIO NOCHE</span>
+              </div>
+            </div>
+
+            <div class="mockup-metrics">
+              <div class="metric-box">
+                <div class="metric-label">Ventas Turno Actual</div>
+                <div class="metric-value">$4,850.00</div>
+                <div class="metric-trend">↑ 24% vs ayer</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-label">Mesas Activas</div>
+                <div class="metric-value">18 / 20</div>
+                <div class="metric-trend" style="color:var(--secondary);">Ocupación 90%</div>
+              </div>
+            </div>
+
+            <!-- KDS Live Ticket Mockup -->
+            <div class="mockup-kds-ticket">
+              <div class="ticket-header">
+                <div class="ticket-mesa">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                  </svg>
+                  <span>MESA 04 — Salón Principal</span>
+                </div>
+                <div class="ticket-time">04:18 min</div>
+              </div>
+              <div class="ticket-items">
+                <div class="ticket-item done">
+                  <span>1x Ensalada Burrata Mediterránea</span>
+                  <span>Servido</span>
+                </div>
+                <div class="ticket-item">
+                  <span style="font-weight:600; color:var(--text-main);">2x Ojo de Bife Término Medio</span>
+                  <span style="color:var(--primary); font-weight:600;">En Parrilla</span>
+                </div>
+                <div class="ticket-item">
+                  <span>1x Risotto Trufado de Hongos</span>
+                  <span style="color:var(--secondary);">Emplatando</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating Badge Inferior -->
+          <div class="floating-badge badge-bottom-right">
+            <div class="badge-icon-circle" style="color:var(--accent-green); background:rgba(16, 185, 129, 0.15);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:0.75rem; color:var(--text-dim); font-weight:600;">Mermas de Alimentos</div>
+              <div style="font-size:1.05rem; font-weight:800; color:var(--accent-green);">-42% reducidas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SOCIAL PROOF BAR & LOGOS
+         ========================================================================== -->
+    <div class="social-proof-bar">
+      <div class="container">
+        <p style="text-align:center; font-size:0.85rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:1.4rem; font-weight:600;">
+          Impulsando el servicio de más de 2,500 restaurantes, bares y franquicias en 14 países
+        </p>
+        <div class="logos-wrapper">
+          <div class="brand-partner">🍽️ Bistró Botanika</div>
+          <div class="brand-partner">🍔 Smash Burger Lab</div>
+          <div class="brand-partner">🍕 Trattoria Bella</div>
+          <div class="brand-partner">🍣 Sushi & Omakase</div>
+          <div class="brand-partner">☕ Café Orígenes</div>
+          <div class="brand-partner">🥩 El Asador Gaucho</div>
+        </div>
+
+        <div class="impact-metrics-grid">
+          <div class="impact-stat-card">
+            <div class="impact-number">3.2x</div>
+            <div class="impact-desc">Más rápido el envío de comandas de mesero a cocina</div>
+          </div>
+          <div class="impact-stat-card">
+            <div class="impact-number">40%</div>
+            <div class="impact-desc">Reducción en desperdicios y robos hormiga de inventario</div>
+          </div>
+          <div class="impact-stat-card">
+            <div class="impact-number">99.98%</div>
+            <div class="impact-desc">Disponibilidad del sistema incluso durante cortes de internet</div>
+          </div>
+          <div class="impact-stat-card">
+            <div class="impact-number">+28%</div>
+            <div class="impact-desc">Incremento promedio en el ticket medio gracias al Menú QR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         COMPARACIÓN: ANTES VS DESPUÉS CON RESTOFLOW
+         ========================================================================== -->
+    <section class="section" id="comparativa">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-pill">Transformación Operativa</div>
+          <h2 class="section-title">El fin de las comandas perdidas y las cuentas equivocadas</h2>
+          <p class="section-subtitle">
+            Compara cómo funciona un restaurante tradicional frente a uno potenciado con la automatización de RestoFlow.
+          </p>
+        </div>
+
+        <div class="comparison-grid">
+          <!-- Antes -->
+          <div class="comparison-card card-before">
+            <span class="comparison-card-badge">Gestión Tradicional Frustrante</span>
+            <h3 class="comparison-title">El día a día con papel y sistemas obsoletos</h3>
+            <div class="comparison-list">
+              <div class="comparison-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <span>Comandas en papel ilegibles que generan platos devueltos y quejas de comensales.</span>
+              </div>
+              <div class="comparison-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <span>Meseros corriendo de un lado a otro solo para llevar tickets a la barra o a la cocina.</span>
+              </div>
+              <div class="comparison-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <span>Descuadres de caja diarios por falta de registro de cortesías y cobros manuales erróneos.</span>
+              </div>
+              <div class="comparison-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <span>Inventario que solo se revisa a fin de mes, descubriendo pérdidas de dinero cuando ya es tarde.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Después -->
+          <div class="comparison-card card-after">
+            <span class="comparison-card-badge">Con RestoFlow Intelligent POS</span>
+            <h3 class="comparison-title">Operación fluida, mesas llenas y control absoluto</h3>
+            <div class="comparison-list">
+              <div class="comparison-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Comandas enviadas desde la tablet del mesero directamente al monitor de cocina en 1 segundo.</span>
+              </div>
+              <div class="comparison-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Los meseros pasan 80% más tiempo atendiendo y vendiendo en lugar de caminar ida y vuelta.</span>
+              </div>
+              <div class="comparison-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>División de cuentas automática en segundos por comensal, pago con tarjeta o QR sin fricción.</span>
+              </div>
+              <div class="comparison-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Descarga automática de ingredientes por receta (escandallos) en tiempo real con alertas de stock bajo.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CARACTERÍSTICAS PRINCIPALES (FEATURES)
+         ========================================================================== -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-pill">Potencia y Simplicidad</div>
+          <h2 class="section-title">Diseñado exclusivamente para el ritmo frenético de un restaurante</h2>
+          <p class="section-subtitle">
+            Cada módulo fue construido junto a chefs, bartenders y administradores para eliminar los cuellos de botella en cada turno.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <!-- Card 1 -->
+          <article class="feature-card">
+            <div>
+              <div class="feature-icon-box">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+              </div>
+              <h3 class="feature-title">Punto de Venta Táctil Ultrarrápido</h3>
+              <p class="feature-desc">
+                Genera tickets y cobra en menos de 3 toques. Compatible con iPads, tablets Android, computadoras Windows, Mac e impresoras térmicas.
+              </p>
+            </div>
+            <div class="feature-tags">
+              <span class="feature-tag">Offline First</span>
+              <span class="feature-tag">Multi-Caja</span>
+              <span class="feature-tag">Cierre X & Z</span>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="feature-card">
+            <div>
+              <div class="feature-icon-box">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                  <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                  <line x1="6" y1="1" x2="6" y2="4"></line>
+                  <line x1="10" y1="1" x2="10" y2="4"></line>
+                  <line x1="14" y1="1" x2="14" y2="4"></line>
+                </svg>
+              </div>
+              <h3 class="feature-title">KDS Cocina y Pantalla de Bar</h3>
+              <p class="feature-desc">
+                Organiza pedidos cronológicamente con semáforos de tiempo (verde, amarillo, rojo). Alerta al mesero por vibración cuando el plato está listo.
+              </p>
+            </div>
+            <div class="feature-tags">
+              <span class="feature-tag">Tiempos de Cocción</span>
+              <span class="feature-tag">Filtro por Estación</span>
+              <span class="feature-tag">Cero Papel</span>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="feature-card">
+            <div>
+              <div class="feature-icon-box">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+              </div>
+              <h3 class="feature-title">Menú Digital QR Interactivo</h3>
+              <p class="feature-desc">
+                Tus comensales escanean el código en la mesa, ven fotos profesionales, eligen alérgenos, ordenan y hasta pueden solicitar la cuenta o pagar en línea.
+              </p>
+            </div>
+            <div class="feature-tags">
+              <span class="feature-tag">Fotos HD</span>
+              <span class="feature-tag">Cambios en Vivo</span>
+              <span class="feature-tag">Multi-idioma</span>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="feature-card">
+            <div>
+              <div class="feature-icon-box">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+              </div>
+              <h3 class="feature-title">Control de Insumos y Escandallo</h3>
+              <p class="feature-desc">
+                Define recetas con gramos y mililitros exactos. Cada cóctel o hamburguesa vendida descuenta automáticamente licores y carnes del stock.
+              </p>
+            </div>
+            <div class="feature-tags">
+              <span class="feature-tag">Costo de Receta</span>
+              <span class="feature-tag">Alertas de Stock</span>
+              <span class="feature-tag">Auditoría Mermas</span>
+            </div>
+          </article>
+
+          <!-- Card 5 -->
+          <article class="feature-card">
+            <div>
+              <div class="feature-icon-box">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+              </div>
+              <h3 class="feature-title">Plano de Salón y Gestión de Reservas</h3>
+              <p class="feature-desc">
+                Personaliza la distribución exacta de tus mesas, terrazas y barras. Visualiza qué mesas están libres, ocupadas, pidiendo cuenta o reservadas para la noche.
+              </p>
+            </div>
+            <div class="feature-tags">
+              <span class="feature-tag">Drag & Drop</span>
+              <span class="feature-tag">Tiempos en Mesa</span>
+              <span class="feature-tag">Unión de Mesas</span>
+            </div>
+          </article>
+
+          <!-- Card 6 -->
+          <article class="feature-card">
+            <div>
+              <div class="feature-icon-box">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+              </div>
+              <h3 class="feature-title">Integración Delivery & WhatsApp</h3>
+              <p class="feature-desc">
+                Recibe pedidos directos por WhatsApp y centraliza pedidos de Rappi, UberEats y PedidosYa en una sola pantalla sin necesidad de múltiples tablets.
+              </p>
+            </div>
+            <div class="feature-tags">
+              <span class="feature-tag">Cero Comisiones Extra</span>
+              <span class="feature-tag">Ruteo de Reparto</span>
+              <span class="feature-tag">CRM Clientes</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SIMULADOR INTERACTIVO EN VIVO (POS / MESAS / COCINA)
+         ========================================================================== -->
+    <section class="section" id="simulator">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-pill">Experiencia Interactiva</div>
+          <h2 class="section-title">Prueba la interfaz ahora mismo en tiempo real</h2>
+          <p class="section-subtitle">
+            Haz clic en los platos para agregarlos a la comanda o cambia de pestaña para ver el plano de mesas y la pantalla de cocina.
+          </p>
+        </div>
+
+        <div class="simulator-container">
+          <!-- Botones de Pestañas -->
+          <div class="simulator-tabs">
+            <button class="sim-tab-btn active" data-tab="tab-pos">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line></svg>
+              <span>1. Comandero Táctil (POS)</span>
+            </button>
+            <button class="sim-tab-btn" data-tab="tab-tables">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              <span>2. Mapa de Salón (Mesas)</span>
+            </button>
+            <button class="sim-tab-btn" data-tab="tab-kds">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path></svg>
+              <span>3. Pantalla de Cocina (KDS)</span>
+            </button>
+          </div>
+
+          <!-- Pestaña 1: Comandero POS -->
+          <div class="sim-content-pane active" id="tab-pos">
+            <div class="pos-layout">
+              <!-- Catálogo de productos clickeables -->
+              <div>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem; font-weight:600;">
+                  👇 Haz clic en un platillo o bebida para agregarlo a la cuenta de la Mesa 04:
+                </p>
+                <div class="menu-catalog-grid">
+                  <button class="catalog-item-btn" data-name="Hamburguesa Trufada" data-price="14.50" data-emoji="🍔">
+                    <div class="item-emoji">🍔</div>
+                    <div class="item-name">Hamburguesa Trufada</div>
+                    <div class="item-price">$14.50</div>
+                  </button>
+                  <button class="catalog-item-btn" data-name="Pizza Margherita D.O.P" data-price="16.00" data-emoji="🍕">
+                    <div class="item-emoji">🍕</div>
+                    <div class="item-name">Pizza Margherita D.O.P</div>
+                    <div class="item-price">$16.00</div>
+                  </button>
+                  <button class="catalog-item-btn" data-name="Tacos al Pastor x3" data-price="11.00" data-emoji="🌮">
+                    <div class="item-emoji">🌮</div>
+                    <div class="item-name">Tacos al Pastor x3</div>
+                    <div class="item-price">$11.00</div>
+                  </button>
+                  <button class="catalog-item-btn" data-name="Cerveza Artesanal IPA" data-price="5.50" data-emoji="🍺">
+                    <div class="item-emoji">🍺</div>
+                    <div class="item-name">Cerveza Artesanal IPA</div>
+                    <div class="item-price">$5.50</div>
+                  </button>
+                  <button class="catalog-item-btn" data-name="Cóctel Aperol Spritz" data-price="9.50" data-emoji="🍹">
+                    <div class="item-emoji">🍹</div>
+                    <div class="item-name">Cóctel Aperol Spritz</div>
+                    <div class="item-price">$9.50</div>
+                  </button>
+                  <button class="catalog-item-btn" data-name="Tarta de Queso Vasca" data-price="7.00" data-emoji="🍰">
+                    <div class="item-emoji">🍰</div>
+                    <div class="item-name">Tarta de Queso Vasca</div>
+                    <div class="item-price">$7.00</div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Ticket en vivo -->
+              <div class="pos-ticket-pane">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-weight:700; color:var(--text-main); font-size:1.1rem;">Comanda #1042</span>
+                    <span class="badge-pill" style="margin:0; padding:0.2rem 0.6rem; font-size:0.75rem;">Mesa 04</span>
+                  </div>
+                  <div style="font-size:0.75rem; color:var(--text-dim); margin-top:0.2rem;">Atiende: Mesero Mateo • Salón Central</div>
+
+                  <div class="pos-ticket-items" id="posTicketList">
+                    <!-- Filas dinámicas generadas con JS -->
+                  </div>
+                </div>
+
+                <div class="pos-ticket-summary">
+                  <div style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--text-muted); margin-bottom:0.3rem;">
+                    <span>Subtotal:</span>
+                    <span id="posSubtotal">$0.00</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; font-size:0.85rem; color:var(--text-muted); margin-bottom:0.6rem;">
+                    <span>IVA / Impuesto (10%):</span>
+                    <span id="posTax">$0.00</span>
+                  </div>
+                  <div class="pos-total-row">
+                    <span>Total a Cobrar:</span>
+                    <span style="color:var(--primary);" id="posTotal">$0.00</span>
+                  </div>
+                  <button class="btn btn-primary" id="btnSendKitchen" style="width:100%;">
+                    <span>Enviar Comanda a Cocina</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pestaña 2: Plano de Mesas -->
+          <div class="sim-content-pane" id="tab-tables">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+              <span style="font-size:0.9rem; color:var(--text-muted);">
+                Haz clic en cualquier mesa para alternar su estado: <strong>Libre ➜ Ocupada ➜ Por Cobrar</strong>
+              </span>
+              <div style="display:flex; gap:1rem; font-size:0.8rem; font-weight:600;">
+                <span style="color:#10b981;">● Disponible</span>
+                <span style="color:#ef4444;">● Ocupada</span>
+                <span style="color:#f59e0b;">● Pidiendo Cuenta</span>
+              </div>
+            </div>
+
+            <div class="tables-floor-plan" id="tablesFloorGrid">
+              <!-- Mesas generadas interactivamente -->
+            </div>
+          </div>
+
+          <!-- Pestaña 3: KDS Cocina -->
+          <div class="sim-content-pane" id="tab-kds">
+            <div style="margin-bottom:1.5rem; display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-weight:600; font-size:1rem;">Monitor de Producción en Cocina (KDS)</span>
+              <span class="badge-pill" style="margin:0; background:rgba(16, 185, 129, 0.15); color:var(--accent-green); border-color:var(--accent-green);">
+                3 Órdenes en preparación
+              </span>
+            </div>
+
+            <div class="kds-orders-stream" id="kdsStreamGrid">
+              <!-- Tickets KDS en tiempo real -->
+              <div class="kds-card urgent">
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.75rem;">
+                  <strong style="color:#ef4444;">MESA 02 (Terraza)</strong>
+                  <span style="background:rgba(239, 68, 68, 0.2); color:#f87171; padding:2px 6px; border-radius:4px; font-weight:700;">11:45 min ⚠️</span>
+                </div>
+                <div style="font-size:0.85rem; line-height:1.6; margin-bottom:1rem;">
+                  <div>• 1x Hamburguesa Trufada (Término Bien Cocida)</div>
+                  <div>• 1x Papas Rústicas con Romero</div>
+                </div>
+                <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="this.parentElement.style.opacity='0.4'; this.innerText='¡Completado! ✓';">Marcar Listo</button>
+              </div>
+
+              <div class="kds-card">
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.75rem;">
+                  <strong style="color:var(--primary);">MESA 04 (Salón)</strong>
+                  <span style="background:rgba(245, 158, 11, 0.2); color:#fbbf24; padding:2px 6px; border-radius:4px; font-weight:700;">04:12 min</span>
+                </div>
+                <div style="font-size:0.85rem; line-height:1.6; margin-bottom:1rem;">
+                  <div>• 2x Pizza Margherita D.O.P (Extra albahaca)</div>
+                  <div>• 1x Cóctel Aperol Spritz (Bar)</div>
+                </div>
+                <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="this.parentElement.style.opacity='0.4'; this.innerText='¡Completado! ✓';">Marcar Listo</button>
+              </div>
+
+              <div class="kds-card">
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.75rem;">
+                  <strong style="color:var(--accent-blue);">DELIVERY #8812</strong>
+                  <span style="background:rgba(56, 189, 248, 0.2); color:var(--accent-blue); padding:2px 6px; border-radius:4px; font-weight:700;">01:30 min</span>
+                </div>
+                <div style="font-size:0.85rem; line-height:1.6; margin-bottom:1rem;">
+                  <div>• 3x Tacos al Pastor x3</div>
+                  <div>• 1x Tarta de Queso Vasca</div>
+                </div>
+                <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="this.parentElement.style.opacity='0.4'; this.innerText='¡Completado! ✓';">Marcar Listo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CALCULADORA DE RETORNO DE INVERSIÓN (ROI)
+         ========================================================================== -->
+    <section class="section" id="calculator">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-pill">Calculadora Financiera</div>
+          <h2 class="section-title">Calcula cuánto dinero extra ganará tu restaurante al mes</h2>
+          <p class="section-subtitle">
+            Ajusta el número de mesas y el ticket promedio para estimar el impacto en tus ingresos y el ahorro de costos.
+          </p>
+        </div>
+
+        <div class="calculator-wrapper">
+          <div class="calculator-grid">
+            <!-- Controles Sliders -->
+            <div>
+              <!-- Slider 1 -->
+              <div class="calc-slider-group">
+                <div class="calc-slider-header">
+                  <span class="calc-slider-label">Capacidad de tu Restaurante (Mesas):</span>
+                  <span class="calc-slider-value" id="valTables">25 Mesas</span>
+                </div>
+                <input type="range" min="5" max="120" value="25" class="calc-slider-input" id="rangeTables">
+              </div>
+
+              <!-- Slider 2 -->
+              <div class="calc-slider-group">
+                <div class="calc-slider-header">
+                  <span class="calc-slider-label">Ticket Promedio por Mesa ($ USD):</span>
+                  <span class="calc-slider-value" id="valTicket">$38 USD</span>
+                </div>
+                <input type="range" min="10" max="150" step="2" value="38" class="calc-slider-input" id="rangeTicket">
+              </div>
+
+              <!-- Slider 3 -->
+              <div class="calc-slider-group">
+                <div class="calc-slider-header">
+                  <span class="calc-slider-label">Rotación Actual de Mesas por Día:</span>
+                  <span class="calc-slider-value" id="valTurns">2.5 Turnos</span>
+                </div>
+                <input type="range" min="1" max="6" step="0.5" value="2.5" class="calc-slider-input" id="rangeTurns">
+              </div>
+            </div>
+
+            <!-- Caja de Resultados -->
+            <div class="roi-results-card">
+              <div class="roi-result-title">Incremento Neto Estimado al Mes:</div>
+              <div class="roi-result-amount" id="roiTotalGains">+$3,420</div>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.5rem;">
+                Basado en un aumento del 22% en rotación de salón y 3% de reducción en costos por merma.
+              </p>
+
+              <div class="roi-breakdown">
+                <div class="roi-breakdown-row">
+                  <span>Ventas adicionales por rotación ágil:</span>
+                  <strong id="roiSalesGain">+$2,850/mes</strong>
+                </div>
+                <div class="roi-breakdown-row">
+                  <span>Ahorro en mermas e inventario:</span>
+                  <strong id="roiWasteSavings">+$570/mes</strong>
+                </div>
+                <div class="roi-breakdown-row">
+                  <span>Horas de trabajo en caja ahorradas:</span>
+                  <strong id="roiHoursSaved">~45 horas</strong>
+                </div>
+              </div>
+
+              <button class="btn btn-primary open-modal-btn" style="width:100%;">
+                Empezar a Capturar estos Beneficios
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         TESTIMONIOS Y SOCIAL PROOF
+         ========================================================================== -->
+    <section class="section" id="testimonials">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-pill">Casos de Éxito</div>
+          <h2 class="section-title">Lo que dicen los restauranteros que ya transformaron su negocio</h2>
+          <p class="section-subtitle">
+            Restaurantes con estrella Michelin, cadenas de comida rápida y bistrós de barrio confían a diario en RestoFlow.
+          </p>
+        </div>
+
+        <div class="testimonials-grid">
+          <!-- Card 1 -->
+          <div class="testimonial-card">
+            <div>
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-quote">
+                "Antes de RestoFlow perdíamos entre 4 y 6 platos por noche por confusiones de letra en las comandas manuales. Hoy la cocina y la sala parecen una orquesta sincronizada. La rotación de mesas aumentó un 35% los fines de semana."
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=150&auto=format&fit=crop&q=80" alt="Chef Martín Rossi" class="author-avatar">
+              <div>
+                <div class="author-name">Chef Martín Rossi</div>
+                <div class="author-restaurant">Fundador de Trattoria Della Nonna (3 locales)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="testimonial-card">
+            <div>
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-quote">
+                "El control de recetas al gramo nos salvó más de $1,400 dólares mensuales en la barra de cócteles. Saber en vivo cuánto licor queda sin tener que contar botellas a mano es un antes y un después para la rentabilidad del bar."
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <img src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?w=150&auto=format&fit=crop&q=80" alt="Lucía Méndez" class="author-avatar">
+              <div>
+                <div class="author-name">Lucía Méndez</div>
+                <div class="author-restaurant">Gerente General en Rooftop 54</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="testimonial-card">
+            <div>
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-quote">
+                "Teníamos miedo de cambiar de sistema porque nuestro personal no es muy tecnológico, pero aprendieron a usar RestoFlow en una sola tarde de capacitación. Es ultra intuitivo, rápido y nunca se cuelga."
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&auto=format&fit=crop&q=80" alt="Carlos Valenzuela" class="author-avatar">
+              <div>
+                <div class="author-name">Carlos Valenzuela</div>
+                <div class="author-restaurant">Director Operativo en Smash Burger Group</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         TABLA DE PRECIOS TRANSPARENTES
+         ========================================================================== -->
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-pill">Inversión Clara</div>
+          <h2 class="section-title">Planes diseñados para cada etapa de tu restaurante</h2>
+          <p class="section-subtitle">
+            Sin costos ocultos, sin contratos forzosos. Cancela o cambia de plan en cualquier momento con 1 clic.
+          </p>
+        </div>
+
+        <!-- Toggle Mensual / Anual -->
+        <div class="pricing-toggle-wrapper">
+          <span class="toggle-label" id="labelMonthly">Pago Mensual</span>
+          <label class="pricing-switch">
+            <input type="checkbox" id="pricingToggleCheckbox">
+            <span class="switch-slider"></span>
+          </label>
+          <span class="toggle-label" id="labelAnnual">
+            Pago Anual
+            <span class="save-discount-badge">Ahorra 20%</span>
+          </span>
+        </div>
+
+        <div class="pricing-grid">
+          <!-- Plan Starter -->
+          <div class="pricing-card">
+            <h3 class="plan-name">Cafetería & Starter</h3>
+            <p class="plan-desc">Ideal para cafeterías, food trucks, dark kitchens o pequeños bistrós de hasta 10 mesas.</p>
+            <div class="plan-price-box">
+              <span class="price-currency">$</span>
+              <span class="price-amount" data-monthly="29" data-annual="23">29</span>
+              <span class="price-period">/mes</span>
+            </div>
+            <div class="plan-features-list">
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>1 Terminal Punto de Venta (POS)</span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Hasta 12 mesas en mapa de salón</span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Menú digital QR estándar</span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Reportes de ventas diarios por email</span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Soporte por correo en 24h</span>
+              </div>
+            </div>
+            <button class="btn btn-secondary open-modal-btn">Elegir Starter</button>
+          </div>
+
+          <!-- Plan Pro (Destacado) -->
+          <div class="pricing-card featured">
+            <div class="featured-ribbon">⭐ Más Recomendado</div>
+            <h3 class="plan-name">Restaurante & Bar</h3>
+            <p class="plan-desc">Para restaurantes con salón concurrido que requieren sincronización impecable con cocina.</p>
+            <div class="plan-price-box">
+              <span class="price-currency">$</span>
+              <span class="price-amount" data-monthly="69" data-annual="55">69</span>
+              <span class="price-period">/mes</span>
+            </div>
+            <div class="plan-features-list">
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Mesas y comanderos ilimitados</strong></span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>2 Pantallas de Cocina KDS y Bar</span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Control de Inventario y Escandallos</span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Pedidos y Reservas vía WhatsApp</span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Facturación electrónica ilimitada</span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Soporte prioritario WhatsApp 24/7</span>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-lg open-modal-btn">Probar 14 Días Gratis</button>
+          </div>
+
+          <!-- Plan Enterprise -->
+          <div class="pricing-card">
+            <h3 class="plan-name">Cadenas & Franquicias</h3>
+            <p class="plan-desc">Control corporativo centralizado para grupos gastronómicos con múltiples sucursales.</p>
+            <div class="plan-price-box">
+              <span class="price-currency">$</span>
+              <span class="price-amount" data-monthly="149" data-annual="119">149</span>
+              <span class="price-period">/mes</span>
+            </div>
+            <div class="plan-features-list">
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Multi-sucursal centralizada</span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>KDS y comanderos ilimitados</span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Integración API directa con ERP & BI</span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Migración de datos y recetas dedicada</span>
+              </div>
+              <div class="plan-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Gerente de cuenta VIP y SLA 99.99%</span>
+              </div>
+            </div>
+            <button class="btn btn-secondary open-modal-btn">Hablar con Asesor</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PREGUNTAS FRECUENTES (FAQ)
+         ========================================================================== -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge-pill">Resolvemos tus Dudas</div>
+          <h2 class="section-title">Preguntas Frecuentes</h2>
+          <p class="section-subtitle">
+            Todo lo que necesitas saber antes de modernizar tu restaurante con RestoFlow.
+          </p>
+        </div>
+
+        <div class="faq-accordion">
+          <!-- FAQ 1 -->
+          <div class="faq-item">
+            <button class="faq-question-btn">
+              <span>¿Qué sucede si se corta el internet en pleno servicio de noche?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                RestoFlow cuenta con arquitectura híbrida <strong>Offline-First</strong>. Si tu conexión a internet se interrumpe, puedes seguir cobrando, abriendo mesas e imprimiendo o enviando comandas en tu red local normalmente. En cuanto el internet regresa, el sistema sincroniza automáticamente todos los datos en la nube sin duplicados ni pérdidas.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item">
+            <button class="faq-question-btn">
+              <span>¿Necesito comprar hardware costoso o puedo usar mis propios equipos?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                No estás atado a ningún hardware propietario. RestoFlow funciona directamente desde el navegador o app en iPads, tablets Android, laptops Windows, computadoras Mac y teléfonos celulares de tus meseros. Además, se conecta por Bluetooth, USB o Red LAN a impresoras térmicas Epson, Star Micronics y genéricas de 58mm y 80mm.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item">
+            <button class="faq-question-btn">
+              <span>¿Cuánto tiempo toma la instalación y configuración inicial del menú?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                En promedio, un restaurante está 100% operativo en menos de 24 horas. Puedes cargar tu menú de forma masiva mediante una plantilla Excel o enviarnos tu carta en PDF y nuestro equipo de soporte gastronómico la cargará por ti durante tu periodo de prueba sin costo adicional.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item">
+            <button class="faq-question-btn">
+              <span>¿Es compatible con la facturación electrónica fiscal de mi país?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Sí. Contamos con módulos de facturación electrónica certificados y actualizados para México (SAT CFDI 4.0), Colombia (DIAN), Chile (SII), Perú (SUNAT), España (TicketBAI y VeriFactu) y Argentina (AFIP). La factura se envía directamente al correo del cliente o se imprime con código QR fiscal.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item">
+            <button class="faq-question-btn">
+              <span>¿Hay permanencia obligatoria o comisiones por venta?</span>
+              <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Cero permanencia y <strong>0% de comisión sobre tus ventas</strong>. Solo pagas una suscripción mensual fija y todo lo que tu restaurante venda es 100% tuyo. Puedes cancelar el servicio en cualquier momento desde tu panel de ajustes sin penalizaciones.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CALL TO ACTION FINAL (BANNER DE CONVERSIÓN)
+         ========================================================================== -->
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="cta-banner-wrapper">
+          <div class="badge-pill" style="margin-bottom:1.5rem; background:rgba(255, 255, 255, 0.1); border-color:rgba(255, 255, 255, 0.2); color:#ffffff;">
+            Empieza Hoy Mismo
+          </div>
+          <h2 class="cta-banner-title">
+            ¿Listo para llevar tu restaurante al <span class="text-gradient">siguiente nivel de rentabilidad</span>?
+          </h2>
+          <p class="cta-banner-subtitle">
+            Únete a los más de 2,500 dueños de locales gastronómicos que ya erradicaron el descontrol en cocina y aumentaron sus ganancias.
+          </p>
+
+          <!-- Formulario rápido inline -->
+          <form class="inline-lead-form" id="heroFastForm">
+            <input type="email" placeholder="Ingresa tu correo electrónico comercial..." class="inline-lead-input" required id="fastEmailInput">
+            <button type="submit" class="btn btn-primary">
+              <span>Activar Prueba Gratis</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </form>
+
+          <p style="font-size:0.85rem; color:var(--text-dim);">
+            14 días de prueba completa • Sin tarjeta de crédito • Soporte en español incluido
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#" class="brand-logo" style="margin-bottom:1rem;">
+            <div class="logo-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M6 13.8a4.5 4.5 0 1 1-2.4-7.9 5.5 5.5 0 0 1 10.8-1.5 4.5 4.5 0 0 1 7.1 5.9A4.5 4.5 0 0 1 18 13.8"></path>
+                <path d="M6 14v4a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-4"></path>
+              </svg>
+            </div>
+            <span>Resto<span class="text-gradient">Flow</span></span>
+          </a>
+          <p class="footer-brand-desc">
+            La plataforma en la nube más completa y amigable para la gestión integral de restaurantes, bares, cafeterías y negocios gastronómicos.
+          </p>
+          <div style="display:flex; gap:0.75rem; color:var(--text-dim);">
+            <span>🔒 Certificación SSL 256-bit</span>
+            <span>•</span>
+            <span>⚡ Servidores Cloud SLA 99.98%</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Módulos del Sistema</h4>
+          <ul class="footer-links-list">
+            <li><a href="#features" class="footer-link">Punto de Venta POS</a></li>
+            <li><a href="#features" class="footer-link">Pantalla de Cocina (KDS)</a></li>
+            <li><a href="#features" class="footer-link">Menú Digital QR</a></li>
+            <li><a href="#features" class="footer-link">Control de Inventarios & Recetas</a></li>
+            <li><a href="#features" class="footer-link">Facturación Electrónica Fiscal</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Tipos de Negocio</h4>
+          <ul class="footer-links-list">
+            <li><a href="#pricing" class="footer-link">Restaurantes de Autor & Fine Dining</a></li>
+            <li><a href="#pricing" class="footer-link">Bares, Pubs & Coctelerías</a></li>
+            <li><a href="#pricing" class="footer-link">Cafeterías & Panaderías</a></li>
+            <li><a href="#pricing" class="footer-link">Pizzerías & Dark Kitchens</a></li>
+            <li><a href="#pricing" class="footer-link">Cadenas & Franquicias</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Contacto y Ayuda</h4>
+          <ul class="footer-links-list">
+            <li><a href="#faq" class="footer-link">Centro de Ayuda & Tutoriales</a></li>
+            <li><a href="mailto:soporte@restoflow.com" class="footer-link">soporte@restoflow.com</a></li>
+            <li><a href="tel:+18005553663" class="footer-link">+1 (800) 555-FOOD</a></li>
+            <li><a href="#pricing" class="footer-link">Agendar Demostración VIP</a></li>
+            <li><a href="#" class="footer-link">Comunidad de Restauranteros</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 RestoFlow Technologies Inc. Todos los derechos reservados.
+        </div>
+        <div style="display:flex; gap:1.5rem;">
+          <a href="#" class="footer-link">Términos de Servicio</a>
+          <a href="#" class="footer-link">Política de Privacidad</a>
+          <a href="#" class="footer-link">Aviso Legal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       BOTONES FLOTANTES
+       ========================================================================== -->
+  <div class="floating-actions-container">
+    <!-- Botón Volver Arriba -->
+    <button class="float-btn float-btn-top" id="backToTopBtn" aria-label="Volver al inicio de página" title="Volver arriba">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </button>
+
+    <!-- Botón WhatsApp Soporte/Ventas -->
+    <a href="https://wa.me/18005550199?text=Hola,%20quisiera%20más%20información%20sobre%20el%20software%20RestoFlow" target="_blank" rel="noopener noreferrer" class="float-btn float-btn-whatsapp" aria-label="Hablar por WhatsApp con un asesor" title="Consultar por WhatsApp">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.41 1.55 1.56 2.41 3.62 2.41 5.83 0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.204 8.204 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24zm4.52 11.66c-.19-.09-1.12-.55-1.3-.61-.17-.07-.3-.1-.43.1-.12.19-.48.61-.59.74-.11.12-.22.14-.41.05-.19-.09-.81-.3-1.54-.95-.57-.51-.95-1.14-1.06-1.33-.11-.19-.01-.29.08-.38.08-.09.19-.22.29-.33.09-.11.12-.19.19-.31.06-.12.03-.23-.01-.33-.05-.09-.43-1.04-.59-1.43-.16-.38-.32-.33-.44-.33h-.38c-.13 0-.34.05-.52.24-.18.19-.69.67-.69 1.64s.71 1.9 1.01 2.21c.3.31 1.39 2.12 3.37 2.97.47.2.84.32 1.12.41.47.15.9.13 1.24.08.38-.06 1.12-.46 1.28-.9.16-.44.16-.82.11-.9-.04-.08-.17-.13-.36-.23z"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL CAPTURA DE LEAD / AGENDAR DEMO
+       ========================================================================== -->
+  <div class="modal-overlay" id="leadModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Cerrar modal">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <h3 class="modal-title" id="modalTitle">Comienza tus 14 días gratis</h3>
+      <p class="modal-subtitle">
+        Configuramos tu restaurante en minutos. Sin tarjeta de crédito requerida.
+      </p>
+
+      <form class="modal-form" id="leadForm">
+        <div class="form-group">
+          <label class="form-label" for="userName">Tu Nombre y Apellido:</label>
+          <input type="text" id="userName" class="form-control" placeholder="Ej: Chef Carlos Santana" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="restaurantName">Nombre de tu Restaurante o Bar:</label>
+          <input type="text" id="restaurantName" class="form-control" placeholder="Ej: Trattoria Bella Vista" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="userEmail">Correo Electrónico:</label>
+          <input type="email" id="userEmail" class="form-control" placeholder="nombre@restaurante.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="userPhone">Teléfono / WhatsApp:</label>
+          <input type="tel" id="userPhone" class="form-control" placeholder="+1 (555) 000-0000" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%; margin-top:0.5rem;">
+          Crear Mi Cuenta Gratuita Ahora
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast de Notificación Flotante -->
+  <div class="toast-notification" id="toastNotice">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    <div>
+      <div style="font-weight:700; font-size:0.9rem;" id="toastTitle">¡Solicitud recibida con éxito!</div>
+      <div style="font-size:0.8rem; color:var(--text-muted);" id="toastMessage">Un asesor gastronómico te contactará de inmediato.</div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT PURO (VANILLA JS)
+       ========================================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* ==========================================================================
+         1. ALTERNANCIA DE TEMA (DARK / LIGHT) CON LOCALSTORAGE
+         ========================================================================== */
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const themeIconSun = document.getElementById('themeIconSun');
+      const themeIconMoon = document.getElementById('themeIconMoon');
+      const htmlElement = document.documentElement;
+
+      const savedTheme = localStorage.getItem('restoflow_theme') || 'dark';
+      setTheme(savedTheme);
+
+      themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+      });
+
+      function setTheme(theme) {
+        htmlElement.setAttribute('data-theme', theme);
+        localStorage.setItem('restoflow_theme', theme);
+        if (theme === 'light') {
+          themeIconSun.style.display = 'none';
+          themeIconMoon.style.display = 'block';
+        } else {
+          themeIconSun.style.display = 'block';
+          themeIconMoon.style.display = 'none';
+        }
+      }
+
+      /* ==========================================================================
+         2. NAVBAR SCROLL EFFECT Y ACTIVE LINK OBSERVER
+         ========================================================================== */
+      const navbar = document.getElementById('navbar');
+      const backToTopBtn = document.getElementById('backToTopBtn');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 40) {
+          navbar.classList.add('scrolled');
+          backToTopBtn.classList.add('visible');
+        } else {
+          navbar.classList.remove('scrolled');
+          backToTopBtn.classList.remove('visible');
+        }
+      });
+
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      /* ==========================================================================
+         3. MENÚ MÓVIL (HAMBURGUESA & DRAWER)
+         ========================================================================== */
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileOverlay = document.getElementById('mobileOverlay');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      function toggleMobileMenu() {
+        hamburgerBtn.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        mobileOverlay.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+      }
+
+      hamburgerBtn.addEventListener('click', toggleMobileMenu);
+      mobileOverlay.addEventListener('click', toggleMobileMenu);
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (mobileMenu.classList.contains('active')) {
+            toggleMobileMenu();
+          }
+        });
+      });
+
+      /* ==========================================================================
+         4. SIMULADOR POS INTERACTIVO (PESTAÑAS & COMANDERO)
+         ========================================================================== */
+      // Pestañas del simulador
+      const simTabBtns = document.querySelectorAll('.sim-tab-btn');
+      const simPanes = document.querySelectorAll('.sim-content-pane');
+
+      simTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          simTabBtns.forEach(b => b.classList.remove('active'));
+          simPanes.forEach(p => p.classList.remove('active'));
+
+          btn.classList.add('active');
+          const targetTabId = btn.getAttribute('data-tab');
+          document.getElementById(targetTabId).classList.add('active');
+        });
+      });
+
+      // Lógica de adición de ítems a la comanda activa
+      let currentOrderItems = [
+        { name: 'Hamburguesa Trufada', price: 14.50, emoji: '🍔' },
+        { name: 'Cerveza Artesanal IPA', price: 5.50, emoji: '🍺' }
+      ];
+
+      const posTicketList = document.getElementById('posTicketList');
+      const posSubtotal = document.getElementById('posSubtotal');
+      const posTax = document.getElementById('posTax');
+      const posTotal = document.getElementById('posTotal');
+      const catalogButtons = document.querySelectorAll('.catalog-item-btn');
+      const btnSendKitchen = document.getElementById('btnSendKitchen');
+
+      function renderTicket() {
+        posTicketList.innerHTML = '';
+        if (currentOrderItems.length === 0) {
+          posTicketList.innerHTML = `<div style="text-align:center; color:var(--text-dim); padding:1rem 0; font-size:0.85rem;">La comanda está vacía.<br>Agrega platos desde el catálogo.</div>`;
+          posSubtotal.textContent = '$0.00';
+          posTax.textContent = '$0.00';
+          posTotal.textContent = '$0.00';
+          return;
+        }
+
+        let subtotal = 0;
+        currentOrderItems.forEach((item, index) => {
+          subtotal += item.price;
+          const row = document.createElement('div');
+          row.className = 'pos-order-row';
+          row.innerHTML = `
+            <span>${item.emoji} ${item.name}</span>
+            <div style="display:flex; align-items:center;">
+              <strong>$${item.price.toFixed(2)}</strong>
+              <button class="remove-item-btn" data-index="${index}" title="Quitar ítem">✕</button>
+            </div>
+          `;
+          posTicketList.appendChild(row);
+        });
+
+        const tax = subtotal * 0.10;
+        const total = subtotal + tax;
+
+        posSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+        posTax.textContent = `$${tax.toFixed(2)}`;
+        posTotal.textContent = `$${total.toFixed(2)}`;
+
+        // Botones de eliminación
+        const removeBtns = posTicketList.querySelectorAll('.remove-item-btn');
+        removeBtns.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const idx = parseInt(e.target.getAttribute('data-index'), 10);
+            currentOrderItems.splice(idx, 1);
+            renderTicket();
+          });
+        });
+      }
+
+      catalogButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const name = btn.getAttribute('data-name');
+          const price = parseFloat(btn.getAttribute('data-price'));
+          const emoji = btn.getAttribute('data-emoji');
+          currentOrderItems.push({ name, price, emoji });
+          renderTicket();
+        });
+      });
+
+      renderTicket();
+
+      // Botón enviar a cocina
+      btnSendKitchen.addEventListener('click', () => {
+        if (currentOrderItems.length === 0) {
+          showToast('Comanda vacía', 'Agrega al menos un plato antes de enviar a cocina.');
+          return;
+        }
+        showToast('¡Comanda #1042 enviada a Cocina!', 'Los tickets se desplegaron en el KDS de cocina y barra en 0.2s.');
+        currentOrderItems = [];
+        renderTicket();
+      });
+
+      /* Generación Interactiva del Plano de Mesas (Pestaña 2) */
+      const tablesFloorGrid = document.getElementById('tablesFloorGrid');
+      const tableStates = [
+        { num: '01', state: 'occupied', label: 'Ocupada ($42)' },
+        { num: '02', state: 'occupied', label: 'Ocupada ($78)' },
+        { num: '03', state: 'available', label: 'Disponible' },
+        { num: '04', state: 'billing', label: 'Pidiendo Cuenta' },
+        { num: '05', state: 'available', label: 'Disponible' },
+        { num: '06', state: 'occupied', label: 'Ocupada ($110)' },
+        { num: '07', state: 'available', label: 'Disponible' },
+        { num: '08', state: 'billing', label: 'Pidiendo Cuenta' },
+      ];
+
+      tableStates.forEach(tbl => {
+        const node = document.createElement('div');
+        node.className = `table-node ${tbl.state}`;
+        node.innerHTML = `
+          <div class="table-number">Mesa ${tbl.num}</div>
+          <div class="table-status-label">${tbl.label}</div>
+        `;
+
+        node.addEventListener('click', () => {
+          if (node.classList.contains('available')) {
+            node.className = 'table-node occupied';
+            node.querySelector('.table-status-label').textContent = 'Ocupada ($35)';
+          } else if (node.classList.contains('occupied')) {
+            node.className = 'table-node billing';
+            node.querySelector('.table-status-label').textContent = 'Pidiendo Cuenta';
+          } else {
+            node.className = 'table-node available';
+            node.querySelector('.table-status-label').textContent = 'Disponible';
+          }
+        });
+
+        tablesFloorGrid.appendChild(node);
+      });
+
+      /* ==========================================================================
+         5. CALCULADORA DE RETORNO DE INVERSIÓN (ROI)
+         ========================================================================== */
+      const rangeTables = document.getElementById('rangeTables');
+      const rangeTicket = document.getElementById('rangeTicket');
+      const rangeTurns = document.getElementById('rangeTurns');
+
+      const valTables = document.getElementById('valTables');
+      const valTicket = document.getElementById('valTicket');
+      const valTurns = document.getElementById('valTurns');
+
+      const roiTotalGains = document.getElementById('roiTotalGains');
+      const roiSalesGain = document.getElementById('roiSalesGain');
+      const roiWasteSavings = document.getElementById('roiWasteSavings');
+      const roiHoursSaved = document.getElementById('roiHoursSaved');
+
+      function calculateROI() {
+        const tables = parseInt(rangeTables.value, 10);
+        const ticket = parseFloat(rangeTicket.value);
+        const turns = parseFloat(rangeTurns.value);
+
+        valTables.textContent = `${tables} Mesas`;
+        valTicket.textContent = `$${ticket} USD`;
+        valTurns.textContent = `${turns} Turnos`;
+
+        // Ingreso mensual aproximado = mesas * ticket * turnos * 30 días
+        const monthlyRevenue = tables * ticket * turns * 30;
+
+        // Con RestoFlow: Aumento conservador del 8% en ingresos por rotación rápida + menor tiempo muerto
+        const salesGain = monthlyRevenue * 0.08;
+
+        // Ahorro del 3.5% en costos de ingredientes por control de recetas y mermas
+        const wasteSavings = monthlyRevenue * 0.035;
+
+        const totalGains = salesGain + wasteSavings;
+        const hoursSaved = Math.round(tables * 1.8);
+
+        roiTotalGains.textContent = `+$${Math.round(totalGains).toLocaleString('en-US')}`;
+        roiSalesGain.textContent = `+$${Math.round(salesGain).toLocaleString('en-US')}/mes`;
+        roiWasteSavings.textContent = `+$${Math.round(wasteSavings).toLocaleString('en-US')}/mes`;
+        roiHoursSaved.textContent = `~${hoursSaved} horas`;
+      }
+
+      rangeTables.addEventListener('input', calculateROI);
+      rangeTicket.addEventListener('input', calculateROI);
+      rangeTurns.addEventListener('input', calculateROI);
+      calculateROI();
+
+      /* ==========================================================================
+         6. TOGGLE DE PRECIOS MENSUAL / ANUAL
+         ========================================================================== */
+      const pricingToggleCheckbox = document.getElementById('pricingToggleCheckbox');
+      const priceAmounts = document.querySelectorAll('.price-amount');
+      const labelMonthly = document.getElementById('labelMonthly');
+      const labelAnnual = document.getElementById('labelAnnual');
+
+      pricingToggleCheckbox.addEventListener('change', () => {
+        const isAnnual = pricingToggleCheckbox.checked;
+
+        if (isAnnual) {
+          labelMonthly.style.color = 'var(--text-dim)';
+          labelAnnual.style.color = 'var(--primary)';
+        } else {
+          labelMonthly.style.color = 'var(--primary)';
+          labelAnnual.style.color = 'var(--text-dim)';
+        }
+
+        priceAmounts.forEach(elem => {
+          const targetValue = isAnnual ? elem.getAttribute('data-annual') : elem.getAttribute('data-monthly');
+          elem.style.transform = 'scale(0.85)';
+          elem.style.opacity = '0';
+          setTimeout(() => {
+            elem.textContent = targetValue;
+            elem.style.transform = 'scale(1)';
+            elem.style.opacity = '1';
+          }, 150);
+        });
+      });
+
+      /* ==========================================================================
+         7. ACORDEÓN PREGUNTAS FRECUENTES (FAQ)
+         ========================================================================== */
+      const faqItems = document.querySelectorAll('.faq-item');
+
+      faqItems.forEach(item => {
+        const btn = item.querySelector('.faq-question-btn');
+        const answer = item.querySelector('.faq-answer');
+
+        btn.addEventListener('click', () => {
+          const isOpen = item.classList.contains('active');
+
+          // Cerrar otros
+          faqItems.forEach(other => {
+            if (other !== item) {
+              other.classList.remove('active');
+              other.querySelector('.faq-answer').style.maxHeight = null;
+            }
+          });
+
+          if (!isOpen) {
+            item.classList.add('active');
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+          } else {
+            item.classList.remove('active');
+            answer.style.maxHeight = null;
+          }
+        });
+      });
+
+      /* ==========================================================================
+         8. MODAL DE CAPTURA DE LEADS & TOAST NOTIFICATION
+         ========================================================================== */
+      const leadModal = document.getElementById('leadModal');
+      const modalCloseBtn = document.getElementById('modalCloseBtn');
+      const openModalBtns = document.querySelectorAll('.open-modal-btn');
+      const leadForm = document.getElementById('leadForm');
+      const heroFastForm = document.getElementById('heroFastForm');
+      const fastEmailInput = document.getElementById('fastEmailInput');
+      const toastNotice = document.getElementById('toastNotice');
+      const toastTitle = document.getElementById('toastTitle');
+      const toastMessage = document.getElementById('toastMessage');
+
+      function openModal() {
+        leadModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        leadModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      openModalBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal();
+        });
+      });
+
+      modalCloseBtn.addEventListener('click', closeModal);
+
+      leadModal.addEventListener('click', (e) => {
+        if (e.target === leadModal) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && leadModal.classList.contains('active')) {
+          closeModal();
+        }
+      });
+
+      function showToast(title, message) {
+        toastTitle.textContent = title;
+        toastMessage.textContent = message;
+        toastNotice.classList.add('show');
+        setTimeout(() => {
+          toastNotice.classList.remove('show');
+        }, 4500);
+      }
+
+      leadForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const rName = document.getElementById('restaurantName').value;
+        closeModal();
+        leadForm.reset();
+        showToast('¡Cuenta Creada Exitosamente!', `Bienvenido a RestoFlow. Tu acceso para "${rName}" fue enviado a tu correo.`);
+      });
+
+      heroFastForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = fastEmailInput.value;
+        heroFastForm.reset();
+        showToast('¡Acceso Inmediato Concedido!', `Hemos enviado un enlace de activación de 14 días a ${email}.`);
+      });
+    });
+  </script>
+</body>
+</html>
